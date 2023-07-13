@@ -1,0 +1,85 @@
+#include <msp430.h>
+#include "libTimer.h"
+#include "led-sound.h"
+#include "buzzer.h"
+
+int main() {
+
+    configureClocks();
+    enableWDTInterrupts();
+
+    P1DIR |= LEDS;
+    P1OUT &= ~LEDS;
+
+    P1REN |= SWITCHES;
+    P1IE |= SWITCHES;
+    P1OUT |= SWITCHES;
+    P1DIR &= ~SWITCHES;
+    P1IFG &= ~SWITCHES;
+
+    P2IFG &= ~TOPSW;
+    P2DIR &= ~TOPSW;
+    P2REN |= TOPSW;
+    P2IE |= TOPSW;
+    P2OUT |= TOPSW;
+    
+    buzzer_init();
+
+    or_sr(0x18);          // CPU off, GIE on
+}
+
+void
+switch_interrupt_handler()
+{
+  char p1val = P1IN;
+  char p2val = P2IN;		/* switch is in P1 */
+
+  /* update switch interrupt sense to detect changes from current buttons */ 
+  P1IES |= (p1val & TOPSW);	 // if switch up, sense down 
+  P1IES &= (p1val | ~TOPSW);	 //if switch down, sense up 
+  
+/* up=(Dim-to-Bright) green LED and (Low-to-High) buzz */
+  if( p2val & TOPS1 ? 0 : 1 ){
+    /* down=(Bright-to-Dim) red LED and (High-to-Low) buzz */
+    greenTimeAdvStateMachines();
+    P1OUT &= ~LED_RED;
+  } else if( p2val & TOPS2 ? 0 : 1){
+    redTimeAdvStateMachines();
+    P1OUT &= ~LED_GREEN;
+  } else if( p2val & TOPS3 ? 0 : 1){
+    song();
+    P1OUT &= ~LEDS;
+  } else if( p2val & TOPS4 ? 0 : 1){
+    redTimeAdvStateMachines();
+    P1OUT &= ~LED_GREEN;
+  } else if (p1val & SW1 ? 0 : 1){
+    siren();
+    P1OUT &= ~LEDS;
+  } else{
+    buzzer_set_period(0);
+    P1OUT &= ~LEDS;
+  }
+}
+
+void
+__interrupt_vec(PORT2_VECTOR) Port_2(){
+  if (P2IFG & TOPSW) {
+    P2IFG &= ~TOPSW;
+    switch_interrupt_handler();
+  }
+}
+
+/* Switch on P1 (S2) */
+void
+__interrupt_vec(PORT1_VECTOR) Port_1(){
+  if (P1IFG & SWITCHES) {	      /* did a button cause this interrupt? */
+    P1IFG &= ~SWITCHES;		      /* clear pending sw interrupts */
+    switch_interrupt_handler();	/* single handler for all switches */
+  }
+}
+
+void
+__interrupt_vec(WDT_VECTOR) WDT()	/*250 interrupts/sec*/
+{
+  switch_interrupt_handler();
+}

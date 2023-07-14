@@ -4,7 +4,7 @@
 #include "led-sound.h"
 
 void
-switch_interrupt_handler()
+toy_stateMachine()
 {
   char p1val = P1IN;
   char p2val = P2IN;		/* switch is in P1 */
@@ -22,14 +22,13 @@ switch_interrupt_handler()
     redTimeAdvStateMachines();
     P1OUT &= ~LED_GREEN;
   } else if( p2val & TOPS3 ? 0 : 1){
-    greenTimeAdvStateMachines();
-    P1OUT &= ~LED_RED;
+    song();
+    P1OUT |= ~LEDS;
   } else if( p2val & TOPS4 ? 0 : 1){
-    redTimeAdvStateMachines();
-    P1OUT &= ~LED_GREEN;
+    song2();
+    P1OUT &= ~LEDS;
   } else if (p1val & SW1 ? 0 : 1){
-    redTimeAdvStateMachines();
-    P1OUT &= ~LED_GREEN;
+    siren();
   } else{
     buzzer_set_period(0);
     P1OUT &= ~LEDS;

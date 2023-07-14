@@ -10,7 +10,7 @@ AS              = msp430-elf-as
 all: buzzer.elf 
 
 #additional rules for files
-buzzer.elf: ${COMMON_OBJECTS} switch-interrupt-handler.o siren.o song.o song2.o buzzer.o toyMain.o greenStateMach.o redStateMach.o ../lib/libTimer.a
+buzzer.elf: ${COMMON_OBJECTS} toy_stateMachine.o siren.o song.o song2.o buzzer.o toyMain.o greenStateMach.o redStateMach.o ../lib/libTimer.a
 	${CC} ${CFLAGS} -o $@ $^
 
 load: buzzer.elf

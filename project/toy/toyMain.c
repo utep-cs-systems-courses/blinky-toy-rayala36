@@ -28,13 +28,13 @@ int main() {
     or_sr(0x18);          // CPU off, GIE on
 }
 
-void switch_interrupt_handler();
+void toy_stateMachine();
 
 void
 __interrupt_vec(PORT2_VECTOR) Port_2(){
   if (P2IFG & TOPSW) {
     P2IFG &= ~TOPSW;
-    switch_interrupt_handler();
+    toy_stateMachine();
   }
 }
 
@@ -43,12 +43,12 @@ void
 __interrupt_vec(PORT1_VECTOR) Port_1(){
   if (P1IFG & SWITCHES) {	      /* did a button cause this interrupt? */
     P1IFG &= ~SWITCHES;		      /* clear pending sw interrupts */
-    switch_interrupt_handler();	/* single handler for all switches */
+    toy_stateMachine();
   }
 }
 
 void
 __interrupt_vec(WDT_VECTOR) WDT()	/*250 interrupts/sec*/
 {
-  switch_interrupt_handler();
+  toy_stateMachine();
 }

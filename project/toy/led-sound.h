@@ -16,7 +16,7 @@
 
 void greenTimeAdvStateMachines();
 void redTimeAdvStateMachines();
-void switch_interrupt_handler();
+void toy_stateMachine();
 void siren();
 void song();
 void song2();

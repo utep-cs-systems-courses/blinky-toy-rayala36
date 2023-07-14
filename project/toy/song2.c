@@ -3,18 +3,6 @@
 #include "buzzer.h"
 #include "led-sound.h"
 
-void delay_ms(unsigned int milliseconds) {
-
-  unsigned int i;
-
-  for (i = 0; i < milliseconds; i++) {
-
-    __delay_cycles(1000);  // Delay for 1000 cycles (adjust as needed)
-
-  }
-
-}
-
 void song2(){  
   
   static int buzzTime2 = 0;

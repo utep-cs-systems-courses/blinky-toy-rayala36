@@ -7,13 +7,13 @@ CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
 CC              = msp430-elf-gcc
 AS              = msp430-elf-as
 
-all: buzzer.elf 
+all: toy.elf 
 
 #additional rules for files
-buzzer.elf: ${COMMON_OBJECTS} toy_stateMachine.o siren.o song.o song2.o buzzer.o toyMain.o greenStateMach.o redStateMach.o ../lib/libTimer.a
+toy.elf: ${COMMON_OBJECTS} toy_stateMachine.o siren.o song.o song2.o buzzer.o toyMain.o greenStateMach.o redStateMach.o ../lib/libTimer.a
 	${CC} ${CFLAGS} -o $@ $^
 
-load: buzzer.elf
+load: toy.elf
 	msp430loader.sh  $^
 
 clean: $^

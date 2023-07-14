@@ -6,39 +6,54 @@
 void song(){
   static int buzzTime = 0;
   buzzTime++;
-  if (buzzTime == 50)
-    for(int x = 0; x < 25; x++)
+  if (buzzTime == 50){
       buzzer_set_period(1000);
-  if (buzzTime == 100)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_GREEN;
+      P1OUT &= ~LED_RED;
+  } else if (buzzTime == 100){
       buzzer_set_period(1000);
-  if (buzzTime == 150)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_GREEN;
+      P1OUT &= ~LED_GREEN;
+      
+  } else if (buzzTime == 150){
       buzzer_set_period(800);
-  if (buzzTime == 200)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_RED;
+      P1OUT &= ~LED_GREEN;
+      
+  } else if (buzzTime == 200){
       buzzer_set_period(1000);
-
-  if (buzzTime == 325)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_GREEN;
+      P1OUT &= ~LED_RED;
+      
+  } else if (buzzTime == 325){
       buzzer_set_period(800);
-  if (buzzTime == 450)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_RED;
+      P1OUT &= ~LED_GREEN;
+      
+  } else if (buzzTime == 450){
       buzzer_set_period(700);
-  if (buzzTime == 575)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_GREEN;
+      P1OUT &= ~LED_RED;
+      
+  } else if (buzzTime == 575){
       buzzer_set_period(600);
-  
-  if (buzzTime == 700)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_RED;
+      P1OUT &= ~LED_GREEN;
+  } else if (buzzTime == 700){
       buzzer_set_period(600);
-  if (buzzTime == 750)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_RED;
+      P1OUT &= ~LED_GREEN;
+      
+  } else if (buzzTime == 750){
       buzzer_set_period(800);
-  if (buzzTime == 850)
-    for(int x = 0; x < 25; x++)
+      P1OUT |= LED_GREEN;
+      P1OUT &= ~LED_RED;
+      
+  } else if (buzzTime == 850){
       buzzer_set_period(600);
-  
-  if (buzzTime == 900)
-    buzzTime = 0; 
+      P1OUT |= LED_RED;
+      P1OUT &= ~LED_GREEN;
+      
+  } else if (buzzTime == 900)
+       buzzTime = 0; 
 }

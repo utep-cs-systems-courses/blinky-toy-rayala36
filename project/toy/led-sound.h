@@ -19,5 +19,6 @@ void redTimeAdvStateMachines();
 void switch_interrupt_handler();
 void siren();
 void song();
+void song2();
 
 #endif // included

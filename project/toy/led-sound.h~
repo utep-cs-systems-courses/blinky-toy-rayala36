@@ -17,6 +17,7 @@
 void greenTimeAdvStateMachines();
 void redTimeAdvStateMachines();
 void switch_interrupt_handler();
-void play_chorus();
+void siren();
+void song();
 
 #endif // included

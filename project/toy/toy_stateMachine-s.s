@@ -22,23 +22,28 @@ toy_stateMachine:
 	mov &P2IN, &p2val
 
 	mov &p2val, &B1
-	cmp &TOPS1, &B1
+	and &TOPS1, &B1
+	cmp #1, &B1
 	jz p1
 
 	mov &p2val, &B2
-	cmp &TOPS2, &B2
+	and &TOPS2, &B2
+	cmp #1, &B2
 	jz p2
 
 	mov &p2val, &B3
-	cmp &TOPS3, &B3
+	and &TOPS3, &B3
+	cmp #1, &B3
 	jz p3
 	
 	mov &p2val, &B4
-	cmp &TOPS4, &B4
+	and &TOPS4, &B4
+	cmp #1, &B4
 	jz p4
 
 	mov &p1val, &B5
-	cmp &SW1, &B5
+	and &SW1, &B5
+	cmp #1, &B5
 	jz p5
 
 	and #~64, &P1OUT

@@ -12,13 +12,15 @@ void redControl(int On)
   }
 }
 
-// State Machine for Red Light (Dim to Bright) and Buzzer (High to Low)
+// State Machine for Red Light (Bright to Low) and Buzzer (High to Low)
 static int blinkLimit2 = 5;   //  state var representing reciprocal of duty cycle
 
-void blinkUpdateR() // called every 1/250s to blink with duty cycle 1/blinkLimit
+void blinkUpdateR()
 {
+  // As long as the blink count does not pass the blink limit, the light will remain on.
   static int blinkCount2 = 0; // state var representing blink state
   blinkCount2 ++;
+  // The buzzer's frequency corresponds with the blink count.
   buzzer_set_period( (1000 + (blinkCount2*100)) );
   if (blinkCount2 >= blinkLimit2) {
     blinkCount2 = 0;
@@ -28,6 +30,8 @@ void blinkUpdateR() // called every 1/250s to blink with duty cycle 1/blinkLimit
     redControl(0);
 }
 
+/* Enables the light to go from brigh to dim by decreasing duty cycle; the lower the duty cycle, 
+   the dimmer the light. */
 void oncePerSecondR() // repeatedly start bright and gradually lower duty cycle, one step/sec
 {
   blinkLimit2 ++;  // Reduce duty cycle
@@ -35,6 +39,8 @@ void oncePerSecondR() // repeatedly start bright and gradually lower duty cycle,
     blinkLimit2 = 0;
 }
 
+// Speed at which red light will dim and buzzer will decrease in frequency.
+// In this case, each state of the buzzer and red light will remain on for 12% of a second.
 void secondUpdateR()
 {
   static int secondCount2 = 0;

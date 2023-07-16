@@ -4,6 +4,11 @@
 #include "led-sound.h"
 
 void song(){
+
+  /* Using the buzzTime variable, which continuously increases until it reaches 900 and resets, 
+     the buzzer will be set to certain frequencies.  Additionally, the red and green LED's will 
+     toggle with each change in pitch in the buzzer.*/
+  
   static int buzzTime = 0;
   buzzTime++;
   if (buzzTime == 50){

@@ -4,6 +4,9 @@
 #include "led-sound.h"
 
 void song2(){  
+
+  /* Using the buzzTime2 variable, which continuously increases until it reaches 1020 and resets, 
+     the buzzer will be set to certain frequencies for a period of 1/10 of a second.  */
   
   static int buzzTime2 = 0;
   buzzTime2++;
